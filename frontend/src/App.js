@@ -3,12 +3,15 @@ import { BrowserRouter , Routes, Route } from "react-router-dom";
 import FirstPage from './components/FirstPage.js';
 import MainPage from './components/MainPage.js';
 import EmailPage from './components/EmailPage.js';
-import './App.css';
 import SentPage from './components/SentPage.js';
 import DraftsPage from './components/DraftsPage.js';
 import EmailDetailPage from './components/EmailDetailPage.js';
 import EmailContext from "./context/EmailContext";
 import PortfolioPage from './components/PortfolioPage.js';
+import ProjectA from './components/ProjectA.js';
+import ProjectB from './components/ProjectB.js';
+import ProjectC from './components/ProjectC.js';
+import './App.css';
 function App() {
   const emails = [
     {
@@ -43,6 +46,9 @@ function App() {
             <Route path="/drafts" element={<DraftsPage />} />
             <Route path="/sent/:id" element={<EmailDetailPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/portfolio/project-a" element={<ProjectA />} />
+                <Route path="/portfolio/project-b" element={<ProjectB />} />
+                <Route path="/portfolio/project-c" element={<ProjectC />} />
     </Routes>
     </BrowserRouter>
     </EmailContext.Provider>
