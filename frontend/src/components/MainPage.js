@@ -36,6 +36,11 @@ const MainPage = () => {
         }
     };
 
+    // Logout Function
+    const handleLogout = () => {
+        navigate("/");
+    };
+
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-200 overflow-hidden">
             {/* Floating Background Elements */}
@@ -46,11 +51,20 @@ const MainPage = () => {
                 <div className="absolute w-40 h-40 bg-pink-300 rounded-full opacity-30 blur-xl animate-float-reverse bottom-1/4 right-1/3"></div>
             </div>
 
-            {/* Header */}
+            {/* Header with Logout Button */}
             <header className="relative z-10 flex items-center justify-between w-full max-w-4xl px-6 md:px-12 py-4 bg-purple-100 bg-opacity-80 backdrop-blur-lg shadow-lg rounded-b-lg">
                 <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
                 <h1 className="text-xl md:text-2xl font-bold text-indigo-600">{teamName}</h1>
-                <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+                <div className="flex items-center space-x-4">
+                    <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+                    {/* Logout Button */}
+                    <button
+                        onClick={handleLogout}
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300"
+                    >
+                        Logout
+                    </button>
+                </div>
             </header>
 
             {/* Main Content */}

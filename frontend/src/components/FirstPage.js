@@ -3,114 +3,100 @@ import { useNavigate } from "react-router-dom";
 
 const FirstPage = () => {
     const navigate = useNavigate();
-    const [teamName, setTeamName] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleStart = async () => {
-        if (teamName.trim() === "") {
-            alert("Please enter a team name!");
+    const handleLogin = async () => {
+        if (!username.trim() || !password.trim()) {
+            alert("Please enter both username and password!");
             return;
         }
 
         setLoading(true);
 
         try {
-            const response = await fetch("http://localhost:5000/api/teams/add-team", {
+            const response = await fetch("http://localhost:5000/api/teams/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ teamName }),
+                body: JSON.stringify({ username, password }),
             });
 
             const data = await response.json();
             setLoading(false);
 
             if (response.ok) {
-                alert("Team registered successfully!");
-                navigate("/main", { state: { teamName } });
+                alert("Login successful!");
+                navigate("/main", { state: { username } });
             } else {
-                alert(data.message);
+                alert(data.message || "Login failed. Please check your credentials.");
             }
         } catch (error) {
             setLoading(false);
-            alert("Error connecting to the server");
+            alert("Error connecting to the server. Please try again.");
         }
     };
 
     return (
-        <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-200 overflow-hidden">
-            {/* Floating Background Elements */}
-            <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute w-36 h-36 bg-blue-300 rounded-full opacity-30 blur-xl animate-float -top-10 -left-10"></div>
-                <div className="absolute w-28 h-28 bg-purple-300 rounded-full opacity-30 blur-xl animate-float-reverse -bottom-10 right-10"></div>
-                <div className="absolute w-32 h-32 bg-indigo-300 rounded-full opacity-30 blur-xl animate-float top-1/3 left-1/4"></div>
-                <div className="absolute w-40 h-40 bg-pink-300 rounded-full opacity-30 blur-xl animate-float-reverse bottom-1/4 right-1/3"></div>
-            </div>
-
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-200">
             {/* Header */}
-            <header className="relative z-10 flex items-center justify-between w-full max-w-4xl px-6 md:px-12 py-4 bg-purple-200 bg-opacity-90 backdrop-blur-lg shadow-lg rounded-b-lg">
+            <header className="flex items-center justify-between w-full max-w-4xl px-6 md:px-12 py-4 bg-purple-200 bg-opacity-90 shadow-lg rounded-b-lg">
                 <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
                 <h1 className="text-2xl md:text-3xl font-bold text-indigo-600 tracking-widest">CRYPTOQUEST</h1>
                 <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
             </header>
 
-            {/* Main Content */}
-            <main className="relative z-10 flex-grow flex items-center justify-center px-6 py-10">
-                <div className="w-full max-w-lg p-8 md:p-12 bg-purple-100 bg-opacity-90 backdrop-blur-xl border border-gray-300 rounded-2xl shadow-xl text-center">
+            {/* Login Form */}
+            <main className="flex-grow flex items-center justify-center px-6 py-10">
+                <div className="w-full max-w-lg p-8 md:p-12 bg-purple-100 bg-opacity-90 border border-gray-300 rounded-2xl shadow-xl text-center">
                     <p className="mb-6 text-lg md:text-xl text-gray-700 font-medium">
-                        Welcome to the Cryptography Challenge! Decode the encrypted messages and solve mind-bending puzzles. Are you ready to begin?
+                        Welcome to the Cryptography Challenge! Please log in to continue.
                     </p>
 
-                    {/* Input Field */}
-                    <div className="mb-6">
-                        <label htmlFor="teamName" className="block text-gray-700 text-sm md:text-base font-semibold mb-2">
-                            Enter Team Name:
+                    {/* Username Input */}
+                    <div className="mb-4 text-left">
+                        <label htmlFor="username" className="block text-gray-700 text-sm md:text-base font-semibold mb-2">
+                            Username:
                         </label>
                         <input
-                            id="teamName"
+                            id="username"
                             type="text"
-                            value={teamName}
-                            onChange={(e) => setTeamName(e.target.value)}
-                            placeholder="Your Team Name"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Enter your username"
                             className="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
                         />
                     </div>
 
-                    {/* Start Button */}
+                    {/* Password Input */}
+                    <div className="mb-6 text-left">
+                        <label htmlFor="password" className="block text-gray-700 text-sm md:text-base font-semibold mb-2">
+                            Password:
+                        </label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter your password"
+                            className="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
+                        />
+                    </div>
+
+                    {/* Login Button */}
                     <button
                         className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
                             loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"
                         } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
-                        onClick={handleStart}
+                        onClick={handleLogin}
                         disabled={loading}
                     >
-                        {loading ? "Registering..." : "Start Challenge"}
+                        {loading ? "Logging in..." : "Login"}
                     </button>
                 </div>
             </main>
-
-            {/* Floating Animations */}
-            <style>
-                {`
-                @keyframes float {
-                    0%, 100% { transform: translateY(0) scale(1); }
-                    50% { transform: translateY(-10px) scale(1.05); }
-                }
-                @keyframes float-reverse {
-                    0%, 100% { transform: translateY(0) scale(1); }
-                    50% { transform: translateY(10px) scale(1.05); }
-                }
-
-                .animate-float {
-                    animation: float 6s ease-in-out infinite alternate;
-                }
-
-                .animate-float-reverse {
-                    animation: float-reverse 6s ease-in-out infinite alternate;
-                }
-                `}
-            </style>
         </div>
     );
 };
