@@ -4,13 +4,38 @@ import { useNavigate } from "react-router-dom";
 const FirstPage = () => {
     const navigate = useNavigate();
     const [teamName, setTeamName] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleStart = () => {
+    const handleStart = async () => {
         if (teamName.trim() === "") {
             alert("Please enter a team name!");
             return;
         }
-        navigate("/main", { state: { teamName } });
+
+        setLoading(true);
+
+        try {
+            const response = await fetch("http://localhost:5000/api/teams/add-team", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ teamName }),
+            });
+
+            const data = await response.json();
+            setLoading(false);
+
+            if (response.ok) {
+                alert("Team registered successfully!");
+                navigate("/main", { state: { teamName } });
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            setLoading(false);
+            alert("Error connecting to the server");
+        }
     };
 
     return (
@@ -54,10 +79,13 @@ const FirstPage = () => {
 
                     {/* Start Button */}
                     <button
-                        className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                        className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
+                            loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"
+                        } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
                         onClick={handleStart}
+                        disabled={loading}
                     >
-                        Start Challenge
+                        {loading ? "Registering..." : "Start Challenge"}
                     </button>
                 </div>
             </main>
