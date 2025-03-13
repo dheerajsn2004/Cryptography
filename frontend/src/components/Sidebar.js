@@ -20,7 +20,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 <ul>
                     <li
                         className="p-3 hover:bg-gray-700 cursor-pointer flex items-center"
-                        onClick={() => navigate("/email")}
+                        onClick={() => navigate("/")}
                     >
                         <FiInbox size={20} className="mr-3" />
                         Inbox

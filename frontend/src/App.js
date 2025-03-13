@@ -6,8 +6,34 @@ import EmailPage from './components/EmailPage.js';
 import './App.css';
 import SentPage from './components/SentPage.js';
 import DraftsPage from './components/DraftsPage.js';
+import EmailDetailPage from './components/EmailDetailPage.js';
+import EmailContext from "./context/EmailContext";
+import PortfolioPage from './components/PortfolioPage.js';
 function App() {
+  const emails = [
+    {
+        id: 1,
+        sender: "John Doe",
+        recipient: "Jane Smith",
+        subject: "Meeting Reminder",
+        timestamp: "2 hours ago",
+        preview: "Don't forget about the meeting tomorrow at 10 AM.",
+        cc: ["alice@example.com", "bob@example.com"],
+        body: "Hi Jane, just a reminder about our meeting tomorrow at 10 AM. Please ensure you have the project updates ready. Best, John",
+    },
+    {
+        id: 2,
+        sender: "Jane Smith",
+        recipient: "John Doe",
+        subject: "Project Update",
+        timestamp: "5 hours ago",
+        preview: "Here's the latest update on the project.",
+        cc: ["charlie@example.com"],
+        body: "Hi John, here's the latest update on the project. Let me know if you have any questions. Best, Jane",
+    },
+];
   return (
+    <EmailContext.Provider value={emails}>
     <BrowserRouter>
     <Routes>
             <Route  path="/" element={<FirstPage/>} />
@@ -15,9 +41,11 @@ function App() {
             <Route path="/email" element={<EmailPage />} />
             <Route path="/sent" element={<SentPage />} />
             <Route path="/drafts" element={<DraftsPage />} />
-
+            <Route path="/sent/:id" element={<EmailDetailPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
     </Routes>
     </BrowserRouter>
+    </EmailContext.Provider>
 );
 }
 
