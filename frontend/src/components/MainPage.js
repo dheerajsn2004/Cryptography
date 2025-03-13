@@ -8,7 +8,7 @@ const MainPage = () => {
         password: "",
     });
     const [error, setError] = useState("");
-    const [teamName] = useState(useLocation().state?.teamName || "Team");
+    const [teamName] = useState(useLocation().state?.username || "Team");
 
     const secretPassword = "Hello";
 
@@ -20,22 +20,51 @@ const MainPage = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (!formData.email || !formData.password) {
             setError("Please fill in all fields!");
             return;
         }
-
-        if (formData.password === secretPassword) {
-            alert("Login successful! Redirecting...");
-            navigate("/email", { state: { email: formData.email } });
-        } else {
-            setError("Incorrect password. Please try again.");
+    
+        try {
+            // Verify the secret code with the backend
+            const response = await fetch("http://localhost:5000/api/teams/verify-secret-code", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username: teamName, secretCode: formData.password }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                // If secret code is correct, update the email and navigate to EmailPage
+                const updateEmailResponse = await fetch("http://localhost:5000/api/teams/update-email", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username: teamName, email: formData.email }),
+                });
+    
+                const updateEmailData = await updateEmailResponse.json();
+    
+                if (updateEmailResponse.ok) {
+                    alert("Email updated successfully! Redirecting...");
+                    navigate("/email", { state: { email: formData.email } });
+                } else {
+                    setError(updateEmailData.message || "Failed to update email.");
+                }
+            } else {
+                setError(data.message || "Incorrect secret code. Please try again.");
+            }
+        } catch (error) {
+            setError("Error connecting to the server. Please try again.");
         }
     };
-
     // Logout Function
     const handleLogout = () => {
         navigate("/");
@@ -93,23 +122,19 @@ const MainPage = () => {
 
                         {/* Password Input */}
                         <div className="mb-6">
-                            <label htmlFor="password" className="block text-gray-700 text-sm md:text-base font-semibold mb-2">
-                                Password:
-                            </label>
-                            <input
-                                id="password"
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                placeholder="Enter the secret password"
-                                className="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
-                            />
-                            <p className="text-sm text-gray-500 mt-2">
-                                Hint: The secret password is: <strong>{secretPassword}</strong>
-                            </p>
-                        </div>
-
+    <label htmlFor="password" className="block text-gray-700 text-sm md:text-base font-semibold mb-2">
+        Secret Code:
+    </label>
+    <input
+        id="password"
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Enter the secret code"
+        className="w-full px-4 py-3 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
+    />
+</div>
                         {/* Submit Button */}
                         <button
                             type="submit"

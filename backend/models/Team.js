@@ -5,16 +5,25 @@ const teamSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
+    },
+    secretCode: {
+        type: String,
+        default: "", // Optional: Set a default value if needed
+    },
+    email: {
+        type: String,
+        trim: true,
+        default: "",
     },
     createdAt: {
         type: Date,
-        default: Date.now
-    }
+        default: Date.now,
+    },
 });
 
 module.exports = mongoose.model("Team", teamSchema);
