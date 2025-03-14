@@ -16,7 +16,7 @@ const ProjectC = () => {
 
         // Hardcoded decrypted text for Project C
         if (decryptedText === "decryptC") {
-            navigate("/") // End of projects
+            navigate("/template-page") // End of projects
         } else {
             setError("Incorrect decrypted text. Please try again.");
         }
@@ -25,7 +25,7 @@ const ProjectC = () => {
     return (
         <div className="p-4">
             <button
-                onClick={() => navigate("/portfolio")}
+                onClick={() => navigate("/template-page")}
                 className="mb-4 text-blue-500 hover:text-blue-700 focus:outline-none"
             >
                 &larr; Back to Portfolio

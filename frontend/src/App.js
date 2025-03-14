@@ -11,6 +11,8 @@ import PortfolioPage from './components/PortfolioPage.js';
 import ProjectA from './components/ProjectA.js';
 import ProjectB from './components/ProjectB.js';
 import ProjectC from './components/ProjectC.js';
+import TemplatePage from './components/TempltePage.js';
+import ReportPage from './components/ReportPage.js';
 import './App.css';
 function App() {
   const emails = [
@@ -49,6 +51,8 @@ function App() {
             <Route path="/portfolio/project-a" element={<ProjectA />} />
                 <Route path="/portfolio/project-b" element={<ProjectB />} />
                 <Route path="/portfolio/project-c" element={<ProjectC />} />
+                <Route path="/template-page" element={<TemplatePage />} />
+                <Route path="/report-page" element={<ReportPage />} />
     </Routes>
     </BrowserRouter>
     </EmailContext.Provider>
