@@ -1,14 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const MainPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
     const [error, setError] = useState("");
-    const [teamName] = useState(useLocation().state?.username || "Team");
+    const [isSubmitted, setIsSubmitted] = useState(false); // Track submission status
+    const [message, setMessage] = useState(""); // State for success/error messages
+    const username = location.state?.username || "Team"; // Retrieve the username from the state
+
+    // Fetch team's submission status when the page loads
+    useEffect(() => {
+        const fetchTeamStatus = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/api/teams/team-status?username=${username}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    setIsSubmitted(data.hasSubmittedPassword); // Set submission status
+                } else {
+                    setError(data.message || "Failed to fetch team status");
+                }
+            } catch (error) {
+                setError("Error connecting to the server. Please try again.");
+            }
+        };
+
+        fetchTeamStatus();
+    }, [username]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,37 +50,40 @@ const MainPage = () => {
         }
 
         try {
-            // Verify the secret code with the backend
-            const response = await fetch("http://localhost:5000/api/teams/verify-secret-code", {
+            // Verify the password with the backend
+            const response = await fetch("http://localhost:5000/api/teams/verify-password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username: teamName, secretCode: formData.password }),
+                body: JSON.stringify({ username, password: formData.password }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                // If secret code is correct, update the email and navigate to EmailPage
+                // If password is correct, update the email and navigate to EmailPage
                 const updateEmailResponse = await fetch("http://localhost:5000/api/teams/update-email", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ username: teamName, email: formData.email }),
+                    body: JSON.stringify({ username, email: formData.email }),
                 });
 
                 const updateEmailData = await updateEmailResponse.json();
 
                 if (updateEmailResponse.ok) {
-                    alert("Email updated successfully! Redirecting...");
-                    navigate("/email", { state: { email: formData.email } });
+                    setMessage("Password verified! Redirecting...");
+                    setIsSubmitted(true); // Disable the submit button
+                    setTimeout(() => {
+                        navigate("/email", { state: { email: formData.email } });
+                    }, 1500); // Redirect after 1.5 seconds
                 } else {
                     setError(updateEmailData.message || "Failed to update email.");
                 }
             } else {
-                setError(data.message || "Incorrect secret code. Please try again.");
+                setError(data.message || "Incorrect password. Please try again.");
             }
         } catch (error) {
             setError("Error connecting to the server. Please try again.");
@@ -72,7 +98,7 @@ const MainPage = () => {
     return (
         <div
             className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/images/Landing.jpg')` }} // Same dark bluish background image
+            style={{ backgroundImage: `url('/images/Landing.jpg')` }}
         >
             {/* Floating Background Elements */}
             <div className="absolute inset-0 overflow-hidden">
@@ -83,12 +109,11 @@ const MainPage = () => {
             </div>
 
             {/* Header with Logout Button */}
-            <header className="relative z-10 flex items-center justify-between w-full max-w-4xl px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg rounded-b-lg">
+            <header className="relative z-10 flex items-center justify-between w-full px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg">
                 <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
-                <h1 className="text-xl md:text-2xl font-bold text-white">{teamName}</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-white">{username}</h1>
                 <div className="flex items-center space-x-4">
                     <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
-                    {/* Logout Button */}
                     <button
                         onClick={handleLogout}
                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300"
@@ -104,6 +129,7 @@ const MainPage = () => {
                     <h2 className="mb-6 text-xl md:text-2xl font-bold text-white">Enter the Secret Code</h2>
 
                     {error && <p className="text-red-500 mb-4">{error}</p>}
+                    {message && <p className="text-green-500 mb-4">{message}</p>}
 
                     <form onSubmit={handleSubmit}>
                         {/* Email Input */}
@@ -141,9 +167,12 @@ const MainPage = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                            className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
+                                isSubmitted ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"
+                            } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
+                            disabled={isSubmitted}
                         >
-                            Login
+                            {isSubmitted ? "Submitted" : "Submit"}
                         </button>
                     </form>
                 </div>

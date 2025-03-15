@@ -11,14 +11,22 @@ const teamSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    secretCode: {
-        type: String,
-        default: "", // Optional: Set a default value if needed
-    },
     email: {
         type: String,
         trim: true,
         default: "",
+    },
+    points: {
+        type: Number,
+        default: 0, // Initialize points to 0
+    },
+    lastSubmissionTime: {
+        type: Date,
+        default: null, // Initialize to null
+    },
+    hasSubmittedPassword: {
+        type: Boolean,
+        default: false, // Initialize to false
     },
     createdAt: {
         type: Date,

@@ -16,7 +16,7 @@ const ProjectC = () => {
 
         // Hardcoded decrypted text for Project C
         if (decryptedText === "decryptC") {
-            navigate("/template-page") // End of projects
+            navigate("/report-page"); // Navigate to the report page
         } else {
             setError("Incorrect decrypted text. Please try again.");
         }
