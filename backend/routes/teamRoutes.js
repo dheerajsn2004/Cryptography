@@ -53,35 +53,22 @@ router.post("/update-email", async (req, res) => {
 
 // Verify password from answers collection and update team points
 router.post("/verify-password", async (req, res) => {
-    const { username, password } = req.body;
+    const { password, emailId } = req.body; // Remove username from the request
 
     try {
-        // Find the team
-        const team = await Team.findOne({ username });
-
-        if (!team) {
-            return res.status(404).json({ message: "Team not found" });
-        }
-
-        // Check if the team has already submitted the password
-        if (team.hasSubmittedPassword) {
-            return res.status(400).json({ message: "Password already submitted" });
-        }
-
-        // Verify the password in the answers collection
-        const answer = await Answer.findOne({ password });
+        // Verify the password in the answers collection for the specific email
+        const answer = await Answer.findOne({ emailId });
 
         if (!answer) {
+            return res.status(404).json({ message: "Answer not found for this email" });
+        }
+
+        // Check if the entered password matches the stored password
+        if (answer.password !== password) {
             return res.status(401).json({ message: "Incorrect password" });
         }
 
-        // Update points, last submission time, and mark as submitted
-        team.points += 5; // Add 5 points
-        team.lastSubmissionTime = new Date(); // Set the current timestamp
-        team.hasSubmittedPassword = true; // Mark as submitted
-        await team.save();
-
-        res.status(200).json({ message: "Password verified and points updated", team });
+        res.status(200).json({ message: "Password verified" });
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
