@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config(); // Ensure dotenv is loaded
 
+
 // Import routes
 const cipherRoutes = require("./routes/cipherRoutes");
 const emailRoutes = require("./routes/emailRoutes");
@@ -15,7 +16,12 @@ const leaderboardRoutes = require("./routes/leaderboardRoutes");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000", // Allow requests from frontend only
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true // If using cookies or authentication
+}));
+
 
 // Use Routes
 app.use("/api/cipher", cipherRoutes);

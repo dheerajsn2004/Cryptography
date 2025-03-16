@@ -1,86 +1,69 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginTeam } from "../api/teamApi"; // Import API function
 
 const FirstPage = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState(""); // State for success/error messages
+    const [message, setMessage] = useState("");
 
     const handleLogin = async () => {
         if (!username.trim() || !password.trim()) {
             setMessage("Please enter both username and password!");
             return;
         }
-
+    
         setLoading(true);
-        setMessage(""); // Clear previous messages
-
+        setMessage("");
+    
         try {
-            const response = await fetch("http://localhost:5000/api/teams/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            const data = await response.json();
+            const credentials = { username, password };
+            const response = await loginTeam(credentials);
+            const data = response.data;
+            console.log(data);
             setLoading(false);
-
-            if (response.ok) {
+    
+            if (data) {
+                localStorage.setItem("username", username);
                 if (data.redirectToEmail) {
-                    // Redirect to EmailPage if the user has already submitted the password
                     navigate("/email", { state: { email: data.user.email } });
                 } else {
-                    // Display success message on the page
-                    setMessage("Login successful! Redirecting...");
                     setTimeout(() => {
                         navigate("/main", { state: { username } });
-                    }, 1500); // Redirect after 1.5 seconds
+                    }, 500); // Reduce timeout to ensure smooth transition
                 }
             } else {
                 setMessage(data.message || "Login failed. Please check your credentials.");
             }
         } catch (error) {
             setLoading(false);
-            setMessage("Error connecting to the server. Please try again.");
+            setMessage(error.response?.data?.message || "Error connecting to the server. Please try again.");
         }
     };
+    
 
     return (
-        <div
-            className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/images/Landing.jpg')` }}
-        >
-            {/* Header */}
+        <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('/images/Landing.jpg')` }}>
             <header className="w-full px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg">
                 <div className="flex items-center justify-between">
-                    {/* Left Logo */}
                     <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
-
-                    {/* Center Logo */}
                     <img src="./images/inspiro-logo.png" alt="Center Logo" className="w-12 h-12 md:w-20 md:h-16" />
-
-                    {/* Right Logo */}
                     <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
                 </div>
             </header>
 
-            {/* Event Name Above the Inner Div */}
-            <div className="text-center mt-12"> {/* Increased top margin */}
+            <div className="text-center mt-12">
                 <h1 className="text-4xl md:text-5xl font-bold text-yellow-700 tracking-widest">CRYPTOQUEST</h1>
             </div>
 
-            {/* Login Form */}
             <main className="flex-grow flex items-center justify-center px-6 py-10">
                 <div className="w-full max-w-lg p-8 md:p-12 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
                     <p className="mb-6 text-lg md:text-xl text-yellow-700 font-medium">
                         Welcome to the Cryptography Challenge! Please log in to continue.
                     </p>
 
-                    {/* Username Input */}
                     <div className="mb-4 text-left">
                         <label htmlFor="username" className="block text-white text-sm md:text-base font-semibold mb-2">
                             Username:
@@ -95,7 +78,6 @@ const FirstPage = () => {
                         />
                     </div>
 
-                    {/* Password Input */}
                     <div className="mb-6 text-left">
                         <label htmlFor="password" className="block text-white text-sm md:text-base font-semibold mb-2">
                             Password:
@@ -110,18 +92,14 @@ const FirstPage = () => {
                         />
                     </div>
 
-                    {/* Success/Error Message */}
                     {message && (
                         <p className={`mb-4 text-sm ${message.includes("success") ? "text-green-500" : "text-red-500"}`}>
                             {message}
                         </p>
                     )}
 
-                    {/* Login Button */}
                     <button
-                        className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
-                            loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"
-                        } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
+                        className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"}`}
                         onClick={handleLogin}
                         disabled={loading}
                     >

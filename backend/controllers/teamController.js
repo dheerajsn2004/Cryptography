@@ -14,6 +14,7 @@ exports.registerTeam = async (req, res) => {
         await team.save();
         res.status(201).json({ message: "Team registered successfully" });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: "Server error" });
     }
 };
@@ -22,10 +23,16 @@ exports.registerTeam = async (req, res) => {
 exports.loginTeam = async (req, res) => {
     try {
         const { username, password } = req.body;
-        const team = await Team.findOne({ username, password });
+        const team = await Team.findOne({ username });
 
         if (!team) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            res.status(401).json({ message: "Invalid username" });
+            return ;
+        }
+
+        if (team.password !== password) {
+             res.status(401).json({ message: "Invalid password" });
+             return;
         }
 
         res.status(200).json({ message: "Login successful", team });

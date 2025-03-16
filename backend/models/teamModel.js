@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const teamSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true }, // ✅ Added email field
+    password: { type: String, required: true }, // ⚠️ Stored as plain text (Not secure)
     points: { type: Number, default: 0 },
     lastSubmissionTime: { type: Date, default: null },
 
