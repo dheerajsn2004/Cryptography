@@ -69,9 +69,10 @@ const PortfolioPage = () => {
             }}
         >
             <h1 className="text-4xl font-extrabold mb-4 text-white font-serif">Portfolio</h1>
-            <div className="bg-white bg-opacity-35 rounded-lg shadow p-6">
-                <h2 className="text-white text-3xl font-semibold mb-4 font-serif">Welcome to My Portfolio</h2>
-                <p className="text-white text-lg font-sans">
+            {/* Updated div with the same styling as ProjectA */}
+            <div className="bg-blue-100 bg-opacity-50 rounded-lg shadow p-6">
+                <h2 className="text-2xl font-semibold mb-4 text-white font-serif">Welcome to My Portfolio</h2>
+                <p className="text-white leading-relaxed font-sans">
                     Here are some of my recent projects and achievements:
                 </p>
                 <ul className="text-white mt-4 list-disc list-inside text-lg font-sans">

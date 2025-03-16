@@ -5,7 +5,7 @@ const MainPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [formData, setFormData] = useState({
-        email: "",
+        email: "example@example.com", // Default email address
         password: "",
     });
     const [error, setError] = useState("");
@@ -109,11 +109,14 @@ const MainPage = () => {
             </div>
 
             {/* Header with Logout Button */}
-            <header className="relative z-10 flex items-center justify-between w-full px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg">
+            <header
+                className="relative z-10 flex items-center justify-between w-full px-6 md:px-12 py-4 shadow-lg"
+                style={{ backgroundColor: 'rgba(21, 83, 113, 0.5)' }} // Match the header color from FirstPage
+            >
                 <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
                 <h1 className="text-xl md:text-2xl font-bold text-white">{username}</h1>
                 <div className="flex items-center space-x-4">
-                    <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+                    <img src="./images/wie-logo.png" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
                     <button
                         onClick={handleLogout}
                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300"
@@ -142,10 +145,9 @@ const MainPage = () => {
                                 id="email"
                                 type="email"
                                 name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="Enter your email"
-                                className="w-full px-4 py-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
+                                defaultValue={formData.email} // Pre-fill the email
+                                readOnly // Make the email field read-only
+                                className="w-full px-4 py-3 text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all cursor-not-allowed" // Gray background and cursor-not-allowed
                             />
                         </div>
 
@@ -173,7 +175,7 @@ const MainPage = () => {
                             } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
                             disabled={isSubmitted}
                         >
-                            {isSubmitted ? "Submitted" : "Submit"}
+                            {isSubmitted ? "Submitted" : "Enter"}
                         </button>
                     </form>
                 </div>
