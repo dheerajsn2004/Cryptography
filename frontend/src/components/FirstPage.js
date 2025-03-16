@@ -55,11 +55,23 @@ const FirstPage = () => {
             style={{ backgroundImage: `url('/images/Landing.jpg')` }}
         >
             {/* Header */}
-            <header className="flex items-center justify-between w-full px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg">
-                <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
-                <h1 className="text-2xl md:text-3xl font-bold text-yellow-700 tracking-widest">CRYPTOQUEST</h1>
-                <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+            <header className="w-full px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg">
+                <div className="flex items-center justify-between">
+                    {/* Left Logo */}
+                    <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
+
+                    {/* Center Logo */}
+                    <img src="./images/inspiro-logo.png" alt="Center Logo" className="w-12 h-12 md:w-20 md:h-16" />
+
+                    {/* Right Logo */}
+                    <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+                </div>
             </header>
+
+            {/* Event Name Above the Inner Div */}
+            <div className="text-center mt-12"> {/* Increased top margin */}
+                <h1 className="text-4xl md:text-5xl font-bold text-yellow-700 tracking-widest">CRYPTOQUEST</h1>
+            </div>
 
             {/* Login Form */}
             <main className="flex-grow flex items-center justify-center px-6 py-10">

@@ -125,8 +125,9 @@ const MainPage = () => {
 
             {/* Main Content */}
             <main className="relative z-10 flex-grow flex items-center justify-center px-6 py-10">
-                <div className="w-full max-w-lg p-8 md:p-12 bg-blue-900 bg-opacity-25 border border-blue-800 rounded-2xl shadow-xl text-center">
-                    <h2 className="mb-6 text-xl md:text-2xl font-bold text-white">Enter the Secret Code</h2>
+                {/* Increased size of the inner div */}
+                <div className="w-full max-w-6xl p-12 md:p-16 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
+                    <h2 className="mb-6 text-2xl md:text-3xl font-bold text-white">Enter the Secret Code</h2>
 
                     {error && <p className="text-red-500 mb-4">{error}</p>}
                     {message && <p className="text-green-500 mb-4">{message}</p>}
@@ -134,7 +135,7 @@ const MainPage = () => {
                     <form onSubmit={handleSubmit}>
                         {/* Email Input */}
                         <div className="mb-6">
-                            <label htmlFor="email" className="block text-white text-sm md:text-base font-semibold mb-2">
+                            <label htmlFor="email" className="block text-white text-lg md:text-xl font-semibold mb-2">
                                 Email:
                             </label>
                             <input
@@ -150,7 +151,7 @@ const MainPage = () => {
 
                         {/* Password Input */}
                         <div className="mb-6">
-                            <label htmlFor="password" className="block text-white text-sm md:text-base font-semibold mb-2">
+                            <label htmlFor="password" className="block text-white text-lg md:text-xl font-semibold mb-2">
                                 Secret Code:
                             </label>
                             <input
