@@ -41,7 +41,7 @@ const ReportPage = () => {
                 <div className="w-16 h-16">
                     <img src="/images/nisb-logo.png" alt="NISB" className="w-full h-full object-contain" />
                 </div>
-                <div className="text-lg font-semibold">{"Event"}</div>
+                <div className="text-lg font-semibold">{"CryptoQuest"}</div>
                 <div className="w-16 h-16">
                     <img src="/images/wie-logo.jpg" alt="WIE" className="w-full h-full object-contain" />
                 </div>

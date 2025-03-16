@@ -7,7 +7,7 @@ const ProjectA = () => {
     const [error, setError] = useState(""); // State for error messages
     const navigate = useNavigate();
 
-    const handleNextProject = () => {
+    const handleDecryptProject = () => {
         setShowModal(true); // Show the modal for decrypted text input
     };
 
@@ -35,10 +35,10 @@ const ProjectA = () => {
             >
                 &larr; Back to Portfolio
             </button>
-            <div className="bg-white bg-opacity-90 rounded-lg shadow p-6">
+            <div className="bg-blue-100 bg-opacity-50 rounded-lg shadow p-6"> {/* Updated background color */}
                 {/* Hide project description when modal is open */}
                 {!showModal && (
-                    <div className="text-center my-8 p-6 bg-gray-100 rounded-lg shadow-inner border border-gray-200">
+                    <div className="text-center my-8 p-6 bg-blue-200 bg-opacity-50 rounded-lg shadow-inner border border-blue-300">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Project A: E-Commerce Platform</h2>
                         <p className="text-gray-700 leading-relaxed">
                             Developed a fully functional e-commerce platform with user authentication, product management, and payment integration.
@@ -46,12 +46,12 @@ const ProjectA = () => {
                     </div>
                 )}
 
-                {/* Next Button */}
+                {/* Decrypt Project Button */}
                 <button
-                    onClick={handleNextProject}
+                    onClick={handleDecryptProject}
                     className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
                 >
-                    Next Project
+                    Decrypt Project
                 </button>
 
                 {/* Modal for Decrypted Text */}
