@@ -70,7 +70,7 @@ const FirstPage = () => {
 
             {/* Event Name Above the Inner Div */}
             <div className="text-center mt-12"> {/* Increased top margin */}
-                <h1 className="text-4xl md:text-5xl font-bold text-yellow-700 tracking-widest">CRYPTOQUEST</h1>
+                <h1 className="text-4xl md:text-5xl font-bold text-yellow-700 tracking-widest">SILENT CIPHER</h1>
             </div>
 
             {/* Login Form */}
