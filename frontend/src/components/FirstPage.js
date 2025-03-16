@@ -51,12 +51,17 @@ const FirstPage = () => {
 
     return (
         <div
-            className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
+            className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat relative"
             style={{ backgroundImage: `url('/images/Landing.jpg')` }}
         >
+            {/* Overlay to reduce background image opacity */}
+            <div
+                className="absolute inset-0 bg-black bg-opacity-65" // Adjust opacity here (e.g., bg-opacity-50 for 50% opacity)
+            ></div>
+
             {/* Header */}
             <header
-                className="w-full px-6 md:px-12 py-4 shadow-lg"
+                className="w-full px-6 md:px-12 py-4 shadow-lg relative z-10" // Add z-10 to bring header above the overlay
                 style={{ backgroundColor: 'rgba(21, 83, 113, 0.5)' }} // Apply custom color with 50% opacity
             >
                 <div className="flex items-center justify-between">
@@ -72,7 +77,7 @@ const FirstPage = () => {
             </header>
 
             {/* Event Name Above the Inner Div */}
-            <div className="text-center mt-12"> {/* Increased top margin */}
+            <div className="text-center mt-12 relative z-10"> {/* Add z-10 to bring content above the overlay */}
                 {/* Replace text with an image */}
                 <img
                     src="./images/Silent Cipher.png" // Path to your image
@@ -82,7 +87,7 @@ const FirstPage = () => {
             </div>
 
             {/* Login Form */}
-            <main className="flex-grow flex items-center justify-center px-6 py-10">
+            <main className="flex-grow flex items-center justify-center px-6 py-10 relative z-10"> {/* Add z-10 to bring content above the overlay */}
                 {/* Increased width of the inner div */}
                 <div className="w-full max-w-3xl p-8 md:p-12 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
 
@@ -123,16 +128,22 @@ const FirstPage = () => {
                         </p>
                     )}
 
-                    {/* Login Button */}
-                    <button
-                        className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
-                            loading ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"
-                        } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
-                        onClick={handleLogin}
-                        disabled={loading}
-                    >
-                        {loading ? "Logging in..." : "Play"}
-                    </button>
+                    {/* Login Button with Image */}
+                    <div className="flex justify-center"> {/* Center the button */}
+                        <button
+                            className={`w-32 h-12 relative overflow-hidden rounded-lg shadow-lg transition-all transform ${
+                                loading ? "bg-gray-400 cursor-not-allowed" : "hover:scale-105 active:scale-95"
+                            } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
+                            onClick={handleLogin}
+                            disabled={loading}
+                        >
+                            <img
+                                src="./images/Play-button.png" // Replace with the path to your image
+                                alt="Play"
+                                className="w-full h-full object-cover" // Ensure the image covers the entire button
+                            />
+                        </button>
+                    </div>
                 </div>
             </main>
         </div>
