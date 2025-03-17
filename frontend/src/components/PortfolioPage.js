@@ -63,31 +63,38 @@ const PortfolioPage = () => {
 
     return (
         <div
-            className="p-4 min-h-screen bg-cover bg-center"
+            className="p-4 min-h-screen bg-cover bg-center flex flex-col items-center justify-center" // Center-align everything
             style={{
                 backgroundImage: "url('/images/portfolio8.jpg')", // Replace with your image path
             }}
         >
-            <h1 className="text-4xl font-extrabold mb-4 text-white font-serif">Portfolio</h1>
-            {/* Updated div with the same styling as ProjectA */}
-            <div className="bg-blue-100 bg-opacity-50 rounded-lg shadow p-6">
-                <h2 className="text-2xl font-semibold mb-4 text-white font-serif">Welcome to My Portfolio</h2>
-                <p className="text-white leading-relaxed font-sans">
-                    Here are some of my recent projects and achievements:
-                </p>
-                <ul className="text-white mt-4 list-disc list-inside text-lg font-sans">
-                    <li>Project A: Completed in Q1 2023</li>
-                    <li>Project B: Ongoing, expected completion in Q4 2023</li>
-                    <li>Project C: Awarded Best Innovation 2023</li>
-                </ul>
-            </div>
-            <div>
-                <button
-                    onClick={() => navigate("/portfolio/project-a")}
-                    className="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 font-serif"
-                >
-                    Know My Journey
-                </button>
+            {/* Constrain the width of this div and center-align it */}
+            <div className="max-w-4xl w-full mx-auto"> {/* Center the container */}
+                {/* Image for Portfolio Title */}
+                <img
+                    src="/images/portfolio-content.png" // Replace with your image path
+                    alt="Portfolio Title"
+                    className="w-full h-auto mb-8 rounded-lg shadow-lg"
+                />
+
+                {/* Reduced size for the project image */}
+                <div className="flex justify-center"> {/* Center-align the project image */}
+                    <img
+                        src="/images/portfolio-project.png" // Replace with your image path
+                        alt="Portfolio Project"
+                        className="max-w-20 w-full h-auto rounded-lg shadow-lg" // Reduced width using max-w-md
+                    />
+                </div>
+
+                {/* Button to navigate to Project A */}
+                <div className="flex justify-center"> {/* Center-align the button */}
+                    <button
+                        onClick={() => navigate("/portfolio/project-a")}
+                        className="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 font-serif"
+                    >
+                        Know My Journey
+                    </button>
+                </div>
             </div>
         </div>
     );
