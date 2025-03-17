@@ -100,6 +100,9 @@ const MainPage = () => {
             className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url('/images/Landing.jpg')` }}
         >
+            <div
+                className="absolute inset-0 bg-black bg-opacity-65" // Adjust opacity here (e.g., bg-opacity-50 for 50% opacity)
+            ></div>
             {/* Floating Background Elements */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute w-36 h-36 bg-blue-300 rounded-full opacity-30 blur-xl animate-float -top-10 -left-10"></div>
@@ -110,16 +113,16 @@ const MainPage = () => {
 
             {/* Header with Logout Button */}
             <header
-                className="relative z-10 flex items-center justify-between w-full px-6 md:px-12 py-4 shadow-lg"
+                className="relative z-10 flex items-center justify-between w-full px-6 md:px-12 py-3 shadow-lg" // Reduced py-4 to py-2
                 style={{ backgroundColor: 'rgba(21, 83, 113, 0.5)' }} // Match the header color from FirstPage
             >
-                <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
+                <img src="./images/nisb-logo.png" alt="NISB" className="w-10 h-10 md:w-12 md:h-12" /> {/* Reduced logo size */}
                 <h1 className="text-xl md:text-2xl font-bold text-white">{username}</h1>
                 <div className="flex items-center space-x-4">
-                    <img src="./images/wie-logo.png" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+                    <img src="./images/wie-logo.png" alt="WIE" className="w-10 h-10 md:w-12 md:h-12" /> {/* Reduced logo size */}
                     <button
                         onClick={handleLogout}
-                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300"
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300" // Reduced button padding
                     >
                         Logout
                     </button>

@@ -41,9 +41,9 @@ const ReportPage = () => {
                 <div className="w-16 h-16">
                     <img src="/images/nisb-logo.png" alt="NISB" className="w-full h-full object-contain" />
                 </div>
-                <div className="text-lg font-semibold">{"CryptoQuest"}</div>
+                <div className="text-lg font-semibold">{"Silent Cipher"}</div>
                 <div className="w-16 h-16">
-                    <img src="/images/wie-logo.jpg" alt="WIE" className="w-full h-full object-contain" />
+                    <img src="/images/wie-logo.png" alt="WIE" className="w-full h-full object-contain" />
                 </div>
             </header>
 
@@ -52,7 +52,7 @@ const ReportPage = () => {
                 <div 
                     className="max-w-2xl w-full p-8 rounded-lg shadow-lg"
                     style={{
-                        background: "rgba(173, 216, 230, 0.2)", // Light blue with transparency
+                        background: "rgba(173, 216, 230, 0.1)", // Light blue with transparency
                         backdropFilter: "blur(10px)", // Glassmorphism effect
                         border: "1px solid rgba(255, 255, 255, 0.3)", // Subtle white border
                     }}

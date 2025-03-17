@@ -30,12 +30,12 @@ const PortfolioPage = () => {
             >
                 {/* Password Entry Box with Glassmorphism */}
                 <div className="relative z-10 bg-white bg-opacity-40 backdrop-blur-lg border border-white border-opacity-30 shadow-2xl p-8 w-full max-w-md rounded-3xl">
-                    <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800 font-serif">
+                    <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800">
                         Enter Access Code
                     </h1>
                     <form onSubmit={handlePasswordSubmit} className="space-y-6">
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2 font-sans">
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                                 Password:
                             </label>
                             <input

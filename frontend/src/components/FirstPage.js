@@ -61,7 +61,7 @@ const FirstPage = () => {
 
             {/* Header */}
             <header
-                className="w-full px-6 md:px-12 py-4 shadow-lg relative z-10" // Add z-10 to bring header above the overlay
+                className="w-full px-6 md:px-12 py-2 shadow-lg relative z-10" // Add z-10 to bring header above the overlay
                 style={{ backgroundColor: 'rgba(21, 83, 113, 0.5)' }} // Apply custom color with 50% opacity
             >
                 <div className="flex items-center justify-between">
@@ -82,14 +82,14 @@ const FirstPage = () => {
                 <img
                     src="./images/Silent Cipher.png" // Path to your image
                     alt="Silent Cipher"
-                    className="w-64 md:w-80" // Adjust width as needed
+                    className="w-64 md:w-80 mt-4" // Adjust width as needed
                 />
             </div>
 
             {/* Login Form */}
             <main className="flex-grow flex items-center justify-center px-6 py-10 relative z-10"> {/* Add z-10 to bring content above the overlay */}
                 {/* Increased width of the inner div */}
-                <div className="w-full max-w-3xl p-8 md:p-12 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
+                <div className="w-full max-w-3xl p-8 md:p-12 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center mb-12"> {/* Increased bottom margin to mb-12 */}
 
                     {/* Username Input */}
                     <div className="mb-4 text-left">
