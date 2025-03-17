@@ -4,7 +4,10 @@ import { validateCipher } from "../api/cipherApi";
 
 const MainPage = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ password: "" });
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
     const [error, setError] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [message, setMessage] = useState("");
@@ -54,15 +57,31 @@ const MainPage = () => {
     };
 
     return (
-        <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url('/images/Landing.jpg')` }}>
+        <div
+            className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url('/images/Landing.jpg')` }}
+        >
+            {/* Floating Background Elements */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute w-36 h-36 bg-blue-300 rounded-full opacity-30 blur-xl animate-float -top-10 -left-10"></div>
+                <div className="absolute w-28 h-28 bg-purple-300 rounded-full opacity-30 blur-xl animate-float-reverse -bottom-10 right-10"></div>
+                <div className="absolute w-32 h-32 bg-indigo-300 rounded-full opacity-30 blur-xl animate-float top-1/3 left-1/4"></div>
+                <div className="absolute w-40 h-40 bg-pink-300 rounded-full opacity-30 blur-xl animate-float-reverse bottom-1/4 right-1/3"></div>
+            </div>
 
+            {/* Header with Logout Button */}
             <header className="relative z-10 flex items-center justify-between w-full px-6 md:px-12 py-4 bg-blue-900 bg-opacity-0 shadow-lg">
                 <img src="./images/nisb-logo.png" alt="NISB" className="w-12 h-12 md:w-16 md:h-16" />
                 <h1 className="text-xl md:text-2xl font-bold text-white">{username}</h1>
-                <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md">
-                    Logout
-                </button>
+                <div className="flex items-center space-x-4">
+                    <img src="./images/wie-logo.jpg" alt="WIE" className="w-12 h-12 md:w-16 md:h-16" />
+                    <button
+                        onClick={handleLogout}
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300"
+                    >
+                        Logout
+                    </button>
+                </div>
             </header>
 
             <main className="relative z-10 flex-grow flex items-center justify-center px-6 py-10">
@@ -78,9 +97,11 @@ const MainPage = () => {
                             <label className="block text-white text-lg md:text-xl font-semibold mb-2">Email:</label>
                             <input
                                 type="email"
-                                value={"Anonymous@gmail.com"}
-                                readOnly
-                                className="w-full px-4 py-3 text-gray-900 bg-gray-300 border border-gray-400 rounded-lg shadow-md cursor-not-allowed"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="Enter your email"
+                                className="w-full px-4 py-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
                             />
                         </div>
 
@@ -105,7 +126,7 @@ const MainPage = () => {
                             }`}
                             disabled={isSubmitted}
                         >
-                            {isSubmitted ? "Submitted" : "Submit"}
+                            {isSubmitted ? "Submitted" : "Enter"}
                         </button>
                     </form>
                 </div>
