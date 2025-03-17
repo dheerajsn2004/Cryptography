@@ -41,7 +41,11 @@ const ProjectA = () => {
                     <div className="text-center my-8 p-6 bg-blue-200 bg-opacity-50 rounded-lg shadow-inner border border-blue-300">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Project A: E-Commerce Platform</h2>
                         <p className="text-gray-700 leading-relaxed">
-                            Developed a fully functional e-commerce platform with user authentication, product management, and payment integration.
+                        PulseSync is an innovative approach to wireless energy transfer, designed to optimize power distribution across varying distances with minimal loss. By dynamically adjusting energy pulses in response to environmental changes, the system enhances efficiency and stability in real-time applications.
+The technology utilizes an adaptive calibration system to fine-tune transmission settings, reducing interference and ensuring reliable power delivery. Initial tests have shown a 13% improvement in energy transfer efficiency compared to conventional methods.
+Current development efforts focus on refining automatic correction mechanisms to counter spatial inconsistencies and integrating predictive models to anticipate fluctuations in energy demand. Additionally, enhanced security protocols are being implemented to protect transmission data and prevent signal disruptions.
+As PulseSync moves into advanced testing phases, its potential applications range from smart grids to autonomous systems, where stable and efficient wireless power transfer is critical.
+
                         </p>
                     </div>
                 )}

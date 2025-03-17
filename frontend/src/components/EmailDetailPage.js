@@ -159,7 +159,10 @@ const EmailDetailPage = () => {
 
                 {/* Email Body */}
                 <div className="mt-6 pt-4 border-t border-gray-200">
-                    <p className="text-gray-700 whitespace-pre-wrap">{email.body}</p>
+                    <p
+                        className="text-gray-700 whitespace-pre-wrap"
+                        dangerouslySetInnerHTML={{ __html: email.body }} // Render HTML
+                    ></p>
                 </div>
 
                 {/* Decrypt Button */}
