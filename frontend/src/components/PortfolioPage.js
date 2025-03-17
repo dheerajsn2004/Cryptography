@@ -1,39 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateCipher } from "../api/cipherApi";
 
 const PortfolioPage = () => {
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
 
-    const handlePasswordSubmit = (e) => {
+    useEffect(() => {
+        const storedUsername = localStorage.getItem("username") || "Team";
+        setUsername(storedUsername);
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (password === "secret123") {
-            setIsAuthenticated(true);
-        } else {
-            setError("Incorrect password. Please try again.");
+        if (!password) {
+            setError("Please enter the access code!");
+            return;
+        }
+
+        try {
+            const questionId = "d1";
+            const data = { username, questionId, answer: password };
+
+            console.log("Submitting Data:", data);
+
+            const response = await validateCipher("/your-endpoint", data);
+
+            if (response.data.success) {
+                setIsAuthenticated(true);
+                setTimeout(() => navigate("/email"), 1500);
+            } else {
+                setError(response.data.message || "Incorrect password. Try again.");
+            }
+        } catch (error) {
+            console.error(error);
+            setError(error);
         }
     };
 
     if (!isAuthenticated) {
         return (
             <div
-                className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center"
-                style={{
-                    backgroundImage: "url('/images/portfolio8.jpg')", // Replace with your image URL
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                }}
+                className="min-h-screen flex items-center justify-center bg-cover bg-center"
+                style={{ backgroundImage: "url('/images/portfolio8.jpg')" }}
             >
-                {/* Password Entry Box with Glassmorphism */}
                 <div className="relative z-10 bg-white bg-opacity-40 backdrop-blur-lg border border-white border-opacity-30 shadow-2xl p-8 w-full max-w-md rounded-3xl">
                     <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800 font-serif">
                         Enter Access Code
                     </h1>
-                    <form onSubmit={handlePasswordSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2 font-sans">
                                 Password:
@@ -62,12 +81,7 @@ const PortfolioPage = () => {
     }
 
     return (
-        <div
-            className="p-4 min-h-screen bg-cover bg-center"
-            style={{
-                backgroundImage: "url('/images/portfolio8.jpg')", // Replace with your image path
-            }}
-        >
+        <div className="p-4 min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('/images/portfolio8.jpg')" }}>
             <h1 className="text-4xl font-extrabold mb-4 text-white font-serif">Portfolio</h1>
             <div className="bg-white bg-opacity-35 rounded-lg shadow p-6">
                 <h2 className="text-white text-3xl font-semibold mb-4 font-serif">Welcome to My Portfolio</h2>
