@@ -122,7 +122,7 @@ const ReportPage = () => {
                         <button
                             type="button" // Use type="button" to prevent form submission
                             onClick={handleSubmit}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+                            className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
                         >
                             Submit Answers
                         </button>
