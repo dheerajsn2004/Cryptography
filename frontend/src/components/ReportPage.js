@@ -5,6 +5,20 @@ const ReportPage = () => {
     const [answers, setAnswers] = useState(Array(5).fill("")); // State to store answers for 5 questions
     const navigate = useNavigate();
 
+    const questions = [
+        `Who meticulously constructed the façade of Aether?
+Format: Firstname Lastname`,
+        `Among the many silences in this story, one echoes the loudest. On what date and at approximately what time had Lily intended to meet Ava?
+Format: ddmmhh:mm
+`,
+        `Who emerges as the most likely orchestrator of Lily’s murder?
+Format: Firstname Lastname
+`,
+        "In which section of the facility does OWL reside, waiting to be found?",
+        `For those who have truly seen beyond the deception, one last step remains. What are the precise coordinates that lead to OWL?
+Format: xx.xxxx N, xx.xxxx E`
+    ];
+
     // Handle input change for each question
     const handleAnswerChange = (index, value) => {
         const newAnswers = [...answers];
@@ -23,110 +37,69 @@ const ReportPage = () => {
         <div
             className="flex flex-col min-h-screen bg-cover bg-center relative"
             style={{
-                backgroundImage: "url('/images/Landing.jpg')", // Replace with your image path
+                backgroundImage: "url('/images/Landing.jpg')",
             }}
         >
             {/* Overlay with reduced opacity */}
             <div className="absolute inset-0 bg-black bg-opacity-65"></div>
 
             {/* Header */}
-            <header className="relative z-10 flex items-center justify-between bg-opacity-60 px-4 py-3 bg-gray-800 text-white">
-                <div className="w-16 h-16">
+            <header className="relative z-10 flex items-center justify-between bg-opacity-60 px-4 py-2 bg-gray-800 text-white">
+                <div className="w-12 h-12 md:w-16 md:h-16">
                     <img src="/images/nisb-logo.png" alt="NISB" className="w-full h-full object-contain" />
                 </div>
                 {/* Replace "Silent Cipher" text with an image */}
-                <div className="w-32 h-16"> {/* Adjust width and height as needed */}
-                    <img src="/images/report.png" alt="Silent Cipher" className="w-full h-full object-contain" />
+                <div className="w-24 h-12 md:w-32 md:h-16">
+                    <img src="/images/report.png" alt="Report" className="w-full h-full object-contain" />
                 </div>
-                <div className="w-16 h-16">
+                <div className="w-12 h-12 md:w-16 md:h-16">
                     <img src="/images/wie-logo.png" alt="WIE" className="w-full h-full object-contain" />
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="relative z-10 flex-grow flex items-center justify-center p-6">
-                {/* Container for the image and input fields */}
-                <div className="relative max-w-4xl w-full">
-                    {/* Image with questions */}
-                    <img
-                        src="/images/report-questions.png" // Replace with your image path
-                        alt="Report Page"
-                        className="w-full h-auto rounded-lg shadow-lg" // Constrain width and add styling
-                    />
-
-                    {/* Overlay for input fields */}
-                    <div className="absolute inset-0">
-                        {/* Input field for Question 1 */}
-                        <div className="absolute top-[17%] left-[75%]">
-                            <input
-                                type="text"
-                                value={answers[0]}
-                                onChange={(e) => handleAnswerChange(0, e.target.value)}
-                                className="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-90"
-                                placeholder="Answer for Q1"
-                                required
-                            />
+            <main className="relative z-10 flex-grow flex items-center justify-center p-4 md:p-6">
+                <div className="bg-opacity-70 rounded-lg shadow-lg p-6 w-full max-w-4xl">
+                    {/* Reduced font size for the long text */}
+                    <h1 className="text-white text-sm md:text-lg font-bold mb-6 text-center" style={{ fontFamily: "'Agency FB', sans-serif" }}>
+                        As the illusion collapses and reality emerges, only those who have truly observed will piece together the full picture. Before we close the final chapter, five critical questions remain. 
+                    </h1>
+                    
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {questions.map((question, index) => (
+                            <div key={index} className="bg-gray-900 bg-opacity-60 p-4 rounded-lg">
+                                <div className="flex flex-col md:flex-row md:items-center">
+                                    <div className="md:w-2/3 mb-3 md:mb-0">
+                                        {/* Apply Agency FB font to the question text */}
+                                        <p className="text-white text-base md:text-lg font-medium" style={{ fontFamily: "'Agency FB', sans-serif" }}>
+                                            <span className="text-blue-400 mr-2">{index + 1}.</span> 
+                                            {question}
+                                        </p>
+                                    </div>
+                                    <div className="md:w-1/3 md:pl-4">
+                                        <input
+                                            type="text"
+                                            value={answers[index]}
+                                            onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-90"
+                                            placeholder={`Your answer`}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        
+                        <div className="flex justify-center md:justify-end mt-8">
+                            <button
+                                type="submit"
+                                className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300"
+                                style={{ fontFamily: "'Agency FB', sans-serif" }} // Apply Agency FB font to the button
+                            >
+                                Submit Answers
+                            </button>
                         </div>
-
-                        {/* Input field for Question 2 */}
-                        <div className="absolute top-[35%] left-[75%]">
-                            <input
-                                type="text"
-                                value={answers[1]}
-                                onChange={(e) => handleAnswerChange(1, e.target.value)}
-                                className="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-90"
-                                placeholder="Answer for Q2"
-                                required
-                            />
-                        </div>
-
-                        {/* Input field for Question 3 */}
-                        <div className="absolute top-[55%] left-[75%]">
-                            <input
-                                type="text"
-                                value={answers[2]}
-                                onChange={(e) => handleAnswerChange(2, e.target.value)}
-                                className="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-90"
-                                placeholder="Answer for Q3"
-                                required
-                            />
-                        </div>
-
-                        {/* Input field for Question 4 */}
-                        <div className="absolute top-[71%] left-[75%]">
-                            <input
-                                type="text"
-                                value={answers[3]}
-                                onChange={(e) => handleAnswerChange(3, e.target.value)}
-                                className="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-90"
-                                placeholder="Answer for Q4"
-                                required
-                            />
-                        </div>
-
-                        {/* Input field for Question 5 */}
-                        <div className="absolute top-[87%] left-[75%]">
-                            <input
-                                type="text"
-                                value={answers[4]}
-                                onChange={(e) => handleAnswerChange(4, e.target.value)}
-                                className="w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-90"
-                                placeholder="Answer for Q5"
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    {/* Submit Button */}
-                    <div className="absolute bottom-[-8%] left-[77%]">
-                        <button
-                            type="button" // Use type="button" to prevent form submission
-                            onClick={handleSubmit}
-                            className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
-                        >
-                            Submit Answers
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </main>
         </div>
