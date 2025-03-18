@@ -7,7 +7,8 @@ import SentPage from './components/SentPage.js';
 import DraftsPage from './components/DraftsPage.js';
 import EmailDetailPage from './components/EmailDetailPage.js';
 import EmailContext from "./context/EmailContext";
-import PortfolioPage from './components/PortfolioPage.js';
+import PortfolioPasswordPage from './components/PortfolioPasswordPage.js';
+import PortfolioContentPage from './components/PortfolioContentPage.js';
 import ProjectA from './components/ProjectA.js';
 import ProjectB from './components/ProjectB.js';
 import ProjectC from './components/ProjectC.js';
@@ -54,13 +55,14 @@ function App() {
         <EmailContext.Provider value={emails}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<FirstPage />} />
+                <Route path="/" element={<FirstPage />} />
                     <Route path="/main" element={<MainPage />} />
                     <Route path="/email" element={<EmailPage />} />
                     <Route path="/sent" element={<SentPage />} />
                     <Route path="/drafts" element={<DraftsPage />} />
                     <Route path="/sent/:id" element={<EmailDetailPage />} />
-                    <Route path="/portfolio" element={<PortfolioPage />} />
+                    <Route path="/portfolio" element={<PortfolioPasswordPage />} />
+                    <Route path="/portfolio-content" element={<PortfolioContentPage />} />
                     <Route path="/portfolio/project-a" element={<ProjectA />} />
                     <Route path="/portfolio/project-b" element={<ProjectB />} />
                     <Route path="/portfolio/project-c" element={<ProjectC />} />

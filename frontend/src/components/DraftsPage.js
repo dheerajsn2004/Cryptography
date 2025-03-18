@@ -35,13 +35,13 @@ const DraftsPage = () => {
                                 You can access my portfolio using the secure link below. Please note that the portfolio is password-protected to maintain confidentiality.
                             </p>
                             <p className="mb-4">
-                                <Link 
-                                    to="/portfolio" 
-                                    className="text-blue-500 hover:text-blue-700 "
-                                >
-                                    Click here to view my portfolio
-                                </Link>
-                            </p>
+    <Link 
+        to="/portfolio" 
+        className="text-blue-500 hover:text-blue-700"
+    >
+        Click here to view my portfolio
+    </Link>
+</p>
                             <p className="mb-4">
                                 For security reasons, I will provide the password separately via our secure channel.
                             </p>

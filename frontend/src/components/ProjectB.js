@@ -33,12 +33,12 @@ const ProjectB = () => {
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
             <div className="relative z-10">
-                <button
-                    onClick={() => navigate("/portfolio")}
-                    className="mb-4 text-blue-500 hover:text-blue-700 focus:outline-none"
-                >
-                    &larr; Back to Portfolio
-                </button>
+            <button
+    onClick={() => navigate("/portfolio-content")} // Navigate to the portfolio content page
+    className="mb-4 text-blue-500 hover:text-blue-700 focus:outline-none"
+>
+    &larr; Back to Portfolio
+</button>
 
                 {/* Constrain the width of this div */}
                 <div className="rounded-lg shadow p-6 mx-auto max-w-5xl w-full mt-8">
@@ -59,7 +59,7 @@ const ProjectB = () => {
                     {/* Decrypt Project Button */}
                     <button
                         onClick={handleDecryptProject}
-                        className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+                        className="mt-6 bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
                     >
                         Decrypt Project
                     </button>
@@ -81,7 +81,7 @@ const ProjectB = () => {
                                     {error && <p className="text-sm text-red-500">{error}</p>}
                                     <button
                                         type="submit"
-                                        className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+                                        className="w-full bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
                                     >
                                         Submit
                                     </button>
