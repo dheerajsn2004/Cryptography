@@ -25,12 +25,35 @@ const EmailDetailPage = () => {
         setSuccessMessage("");
     }, [id]);
 
+    // Handle back navigation to ensure it returns to the email content
+    useEffect(() => {
+        if (showDecryptModal) {
+            const handleBackNavigation = () => {
+                setShowDecryptModal(false); // Close the modal on back navigation
+            };
+
+            // Add a listener for the popstate event (triggered by back navigation)
+            window.addEventListener("popstate", handleBackNavigation);
+
+            // Cleanup the listener when the component unmounts or the modal closes
+            return () => {
+                window.removeEventListener("popstate", handleBackNavigation);
+            };
+        }
+    }, [showDecryptModal]);
+
     if (!email) {
         return <div className="p-4 text-red-500">Email not found.</div>;
     }
 
     const handleDecrypt = () => {
         setShowDecryptModal(true); // Show the decrypt modal
+    };
+
+    const handleCloseDecryptModal = () => {
+        setShowDecryptModal(false); // Close the decrypt modal
+        setDecryptedText(""); // Reset the input field
+        setError(""); // Clear any error messages
     };
 
     const handleDecryptedTextSubmit = async (e) => {
@@ -188,15 +211,24 @@ const EmailDetailPage = () => {
                                     required
                                 />
                                 {error && <p className="text-sm text-red-500">{error}</p>}
-                                <button
-                                    type="submit"
-                                    className={`w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
-                                        isLoading || isSubmitted ? "opacity-50 cursor-not-allowed" : ""
-                                    }`}
-                                    disabled={isLoading || isSubmitted}
-                                >
-                                    {isLoading ? "Verifying..." : isSubmitted ? "Submitted" : "Submit"}
-                                </button>
+                                <div className="flex justify-end space-x-4">
+                                    <button
+                                        type="button"
+                                        onClick={handleCloseDecryptModal}
+                                        className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
+                                    >
+                                        Close
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className={`bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+                                            isLoading || isSubmitted ? "opacity-50 cursor-not-allowed" : ""
+                                        }`}
+                                        disabled={isLoading || isSubmitted}
+                                    >
+                                        {isLoading ? "Verifying..." : isSubmitted ? "Submitted" : "Submit"}
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
