@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { validateCipher } from "../api/cipherApi";
+import { validateDraft } from "../api/draftApi";
 
 const PortfolioPage = () => {
     const [username, setUsername] = useState("");
@@ -17,22 +17,23 @@ const PortfolioPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!password) {
+        if (!password.trim()) {
             setError("Please enter the access code!");
             return;
         }
 
         try {
             const questionId = "d1";
-            const data = { username, questionId, answer: password };
+            const trimmedPassword = password.trim().toLowerCase();
+            const data = { username, questionId, answer: trimmedPassword };
 
             console.log("Submitting Data:", data);
 
-            const response = await validateCipher("/your-endpoint", data);
+            const response = await validateDraft(data);
 
-            if (response.data.success) {
+            if (response) {
                 setIsAuthenticated(true);
-                setTimeout(() => navigate("/email"), 1500);
+                setTimeout(() => navigate("/portfolio"), 1500);
             } else {
                 setError(response.data.message || "Incorrect password. Try again.");
             }
@@ -82,31 +83,23 @@ const PortfolioPage = () => {
 
     return (
         <div
-            className="p-4 min-h-screen bg-cover bg-center flex flex-col items-center justify-center" // Center-align everything
-            style={{
-                backgroundImage: "url('/images/portfolio8.jpg')", // Replace with your image path
-            }}
+            className="p-4 min-h-screen bg-cover bg-center flex flex-col items-center justify-center"
+            style={{ backgroundImage: "url('/images/portfolio8.jpg')" }}
         >
-            {/* Constrain the width of this div and center-align it */}
-            <div className="max-w-4xl w-full mx-auto"> {/* Center the container */}
-                {/* Image for Portfolio Title */}
+            <div className="max-w-4xl w-full mx-auto">
                 <img
-                    src="/images/portfolio-content.png" // Replace with your image path
+                    src="/images/portfolio-content.png"
                     alt="Portfolio Title"
                     className="w-full h-auto mb-8 rounded-lg shadow-lg"
                 />
-
-                {/* Reduced size for the project image */}
-                <div className="flex justify-center"> {/* Center-align the project image */}
+                <div className="flex justify-center">
                     <img
-                        src="/images/portfolio-project.png" // Replace with your image path
+                        src="/images/portfolio-project.png"
                         alt="Portfolio Project"
-                        className="max-w-20 w-full h-auto rounded-lg shadow-lg" // Reduced width using max-w-md
+                        className="max-w-20 w-full h-auto rounded-lg shadow-lg"
                     />
                 </div>
-
-                {/* Button to navigate to Project A */}
-                <div className="flex justify-center"> {/* Center-align the button */}
+                <div className="flex justify-center">
                     <button
                         onClick={() => navigate("/portfolio/project-a")}
                         className="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 font-serif"

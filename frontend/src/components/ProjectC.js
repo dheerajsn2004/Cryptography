@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateProject } from "../api/projectApi";
 
 const ProjectC = () => {
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
@@ -17,15 +18,27 @@ const ProjectC = () => {
         setError(""); // Clear any error messages
     };
 
-    const handleDecryptedTextSubmit = (e) => {
+    const handleDecryptedTextSubmit = async (e) => {
         e.preventDefault();
-
-        // Hardcoded decrypted text for Project C
-        if (decryptedText === "decryptC") {
-            navigate("/report-page"); // Navigate to the report page
-        } else {
-            setError("Incorrect decrypted text. Please try again.");
-        }
+        try {
+                            const questionId = "p2";
+                            const trimmedPassword = decryptedText.trim().toLowerCase();
+                            const username = localStorage.getItem("username");
+                            const data = { username, questionId, answer: trimmedPassword };
+                
+                            console.log("Submitting Data:", data);
+                
+                            const response = await validateProject(data);
+                
+                            if (response) {
+                                setTimeout(() => navigate("/report-page"), 1500);
+                            } else {
+                                setError(response?.data?.message || "Incorrect password. Try again.");
+                            }
+                        } catch (error) {
+                            console.error(error);
+                            setError("An error occurred. Please try again.");
+                        }
     };
 
     return (

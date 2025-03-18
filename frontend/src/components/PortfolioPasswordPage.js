@@ -1,39 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateProject } from "../api/projectApi";
 
 const PortfolioPasswordPage = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [message, setMessage] = useState("");
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const navigate = useNavigate();
 
-    const handlePasswordSubmit = (e) => {
+    const handlePasswordSubmit = async (e) => {
         e.preventDefault();
+        setError(""); // Clear previous errors
 
-        if (password === "secret123") {
-            navigate("/portfolio-content"); // Redirect to the portfolio content page
-        } else {
-            setError("Incorrect password. Please try again.");
+        try {
+            const questionId = "q1";
+            const username = localStorage.getItem("username") || "guest"; // Ensure username is valid
+            const sanitizedPassword = password.toLowerCase().trim(); // Convert to lowercase and trim spaces
+
+            const data = { username, questionId, password: sanitizedPassword };
+
+            console.log("Submitting Data:", data);
+
+            const response = await validateProject(data);
+
+            if (response?.success) {
+                setMessage("✅ Password verified! Redirecting...");
+                setIsSubmitted(true); // Mark submission successful
+            } else {
+                setError(response?.message || "❌ Incorrect password. Try again.");
+            }
+        } catch (error) {
+            console.error("API Error:", error);
+            setError("⚠️ Error connecting to the server. Please try again.");
         }
     };
+
+    // Redirect after success
+    useEffect(() => {
+        if (isSubmitted) {
+            const timer = setTimeout(() => navigate("/portfolio-content"), 1500);
+            return () => clearTimeout(timer); // Cleanup timeout
+        }
+    }, [isSubmitted, navigate]);
 
     return (
         <div
             className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center"
             style={{
-                backgroundImage: "url('/images/portfolio8.jpg')", // Replace with your image URL
+                backgroundImage: "url('/images/portfolio8.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
             }}
         >
-            {/* Overlay to reduce background image opacity */}
-            <div className="absolute inset-0 bg-black bg-opacity-50"></div> {/* Adjust opacity here */}
+            {/* Background Overlay */}
+            <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
-            {/* Password Entry Box with Glassmorphism */}
+            {/* Password Entry Box */}
             <div className="relative z-10 bg-white bg-opacity-40 backdrop-blur-lg border border-white border-opacity-30 shadow-2xl p-8 w-full max-w-md rounded-3xl">
                 <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800">
                     Enter Access Code
                 </h1>
+
                 <form onSubmit={handlePasswordSubmit} className="space-y-6">
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
@@ -47,14 +76,23 @@ const PortfolioPasswordPage = () => {
                             className="w-full p-3 border border-gray-300 rounded-xl bg-white bg-opacity-60 backdrop-blur-md shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 transition-all font-sans"
                             placeholder="Enter password"
                             required
+                            disabled={isSubmitted} // Disable input after success
                         />
                     </div>
-                    {error && <p className="text-sm text-red-500 text-center font-semibold font-sans">{error}</p>}
+
+                    {/* Display error message */}
+                    {error && <p className="text-sm text-red-500 text-center font-semibold">{error}</p>}
+
+                    {/* Display success message */}
+                    {message && <p className="text-sm text-green-500 text-center font-semibold">{message}</p>}
+
                     <button
                         type="submit"
-                        className="w-full bg-blue-800 text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:bg-blue-600 transition-all transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-blue-300 font-serif"
+                        className={`w-full font-bold py-3 px-6 rounded-xl shadow-lg transition-all transform focus:outline-none font-serif
+                            ${isSubmitted ? "bg-gray-500 cursor-not-allowed" : "bg-blue-800 text-white hover:bg-blue-600 hover:scale-105 active:scale-95 focus:ring-4 focus:ring-blue-300"}`}
+                        disabled={isSubmitted} // Disable button after success
                     >
-                        Unlock
+                        {isSubmitted ? "✔ Verified" : "Unlock"}
                     </button>
                 </form>
             </div>

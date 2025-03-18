@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateProject } from "../api/projectApi";
 
 const ProjectA = () => {
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
@@ -17,14 +18,27 @@ const ProjectA = () => {
         setError(""); // Clear any error messages
     };
 
-    const handleDecryptedTextSubmit = (e) => {
+    const handleDecryptedTextSubmit = async (e) => {
         e.preventDefault();
 
-        // Hardcoded decrypted text for Project A
-        if (decryptedText === "decryptA") {
-            navigate("/portfolio/project-b"); // Navigate to Project B
-        } else {
-            setError("Incorrect decrypted text. Please try again.");
+        try {
+            const questionId = "p1";
+            const trimmedPassword = decryptedText.trim().toLowerCase();
+            const username = localStorage.getItem("username");
+            const data = { username, questionId, answer: trimmedPassword };
+
+            console.log("Submitting Data:", data);
+
+            const response = await validateProject(data);
+
+            if (response) {
+                setTimeout(() => navigate("/portfolio/project-b"), 1500);
+            } else {
+                setError(response?.data?.message || "Incorrect password. Try again.");
+            }
+        } catch (error) {
+            console.error(error);
+            setError("An error occurred. Please try again.");
         }
     };
 
@@ -50,14 +64,14 @@ const ProjectA = () => {
                 <div className="rounded-lg shadow p-6 mx-auto max-w-5xl w-full">
                     {/* Image for Project Title */}
                     <img
-                        src="/images/project-1-title.png" // Replace with your image path
+                        src="/images/project-1-title.png"
                         alt="Project A Title"
                         className="w-full h-auto mb-8 rounded-lg shadow-lg"
                     />
 
                     {/* Image for Project Description */}
                     <img
-                        src="/images/project-1-content.png" // Replace with your image path
+                        src="/images/project-1-content.png"
                         alt="Project A Description"
                         className="w-full h-auto mb-8 rounded-lg shadow-lg"
                     />

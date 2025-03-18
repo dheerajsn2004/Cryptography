@@ -22,29 +22,31 @@ const MainPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.password) {
+        const trimmedPassword = formData.password.toLowerCase().trim(); // ✅ Convert to lowercase & trim spaces
+
+        if (!trimmedPassword) {
             setError("Please enter the secret code!");
             return;
         }
 
         try {
             const questionId = "q1";
-            const data = { username, questionId, password: formData.password };
-            
+            const data = { username, questionId, password: trimmedPassword };
+
             console.log("Submitting Data:", data);
-            
+
             const response = await validateCipher(data);
-            
-            if (response?.success) { // Ensure proper response handling
-                setMessage("Password verified! Redirecting...");
+
+            if (response?.success) {
+                setMessage("✅ Password verified! Redirecting...");
                 setIsSubmitted(true);
                 setTimeout(() => navigate("/email"), 1500);
             } else {
-                setError(response?.message || "Incorrect password. Try again.");
+                setError(response?.message || "❌ Incorrect password. Try again.");
             }
         } catch (error) {
-            console.error(error);
-            setError("Error connecting to the server. Please try again.");
+            console.error("API Error:", error);
+            setError("⚠️ Error connecting to the server. Please try again.");
         }
     };
 
@@ -105,7 +107,7 @@ const MainPage = () => {
                             }`}
                             disabled={isSubmitted}
                         >
-                            {isSubmitted ? "Submitted" : "Submit"}
+                            {isSubmitted ? "✔ Submitted" : "Submit"}
                         </button>
                     </form>
                 </div>
