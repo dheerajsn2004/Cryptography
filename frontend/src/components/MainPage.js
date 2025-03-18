@@ -130,59 +130,67 @@ const MainPage = () => {
             </header>
 
             {/* Main Content */}
-            <main className="relative z-10 flex-grow flex items-center justify-center px-6 py-10">
-                {/* Increased size of the inner div */}
-                <div className="w-full max-w-6xl p-12 md:p-16 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
-                    <h2 className="mb-6 text-2xl md:text-3xl font-bold text-white">Enter the Secret Code</h2>
+            <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 py-10 -mt-8"> {/* Added -mt-8 to move the div up */}
+    {/* Text or Image Outside the Div */}
+    <div className="mb-8 mt-10 text-center">
+        {/* Replace "Enter the Secret Code" text with an image */}
+        <img
+            src="/images/text.png" // Replace with the path to your image
+            alt="Enter the Secret Code"
+            className="w-full max-w-lg mx-auto" // Adjust size as needed
+        />
+    </div>
 
-                    {error && <p className="text-red-500 mb-4">{error}</p>}
-                    {message && <p className="text-green-500 mb-4">{message}</p>}
+    {/* Form Container */}
+    <div className="w-full max-w-6xl p-12 md:p-16 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {message && <p className="text-green-500 mb-4">{message}</p>}
 
-                    <form onSubmit={handleSubmit}>
-                        {/* Email Input */}
-                        <div className="mb-6">
-                            <label htmlFor="email" className="block text-white text-lg md:text-xl font-semibold mb-2">
-                                Email:
-                            </label>
-                            <input
-                                id="email"
-                                type="email"
-                                name="email"
-                                defaultValue={formData.email} // Pre-fill the email
-                                readOnly // Make the email field read-only
-                                className="w-full px-4 py-3 text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all cursor-not-allowed" // Gray background and cursor-not-allowed
-                            />
-                        </div>
+        <form onSubmit={handleSubmit}>
+            {/* Email Input */}
+            <div className="mb-6">
+                <label htmlFor="email" className="block text-white text-lg md:text-xl font-semibold mb-2">
+                    Email:
+                </label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    defaultValue={formData.email} // Pre-fill the email
+                    readOnly // Make the email field read-only
+                    className="w-full px-4 py-3 text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all cursor-not-allowed" // Gray background and cursor-not-allowed
+                />
+            </div>
 
-                        {/* Password Input */}
-                        <div className="mb-6">
-                            <label htmlFor="password" className="block text-white text-lg md:text-xl font-semibold mb-2">
-                                Secret Code:
-                            </label>
-                            <input
-                                id="password"
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                placeholder="Enter the secret code"
-                                className="w-full px-4 py-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
-                            />
-                        </div>
+            {/* Password Input */}
+            <div className="mb-6">
+                <label htmlFor="password" className="block text-white text-lg md:text-xl font-semibold mb-2">
+                    Secret Code:
+                </label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter the secret code"
+                    className="w-full px-4 py-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
+                />
+            </div>
 
-                        {/* Submit Button */}
-                        <button
-                            type="submit"
-                            className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
-                                isSubmitted ? "bg-gray-400 cursor-not-allowed" : "bg-indigo-500 hover:bg-indigo-600 hover:scale-105 active:scale-95"
-                            } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
-                            disabled={isSubmitted}
-                        >
-                            {isSubmitted ? "Submitted" : "Enter"}
-                        </button>
-                    </form>
-                </div>
-            </main>
+            {/* Submit Button */}
+            <button
+                type="submit"
+                className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
+                    isSubmitted ? "bg-gray-400 cursor-not-allowed" : "bg-blue-800 hover:bg-blue-500 hover:scale-105 active:scale-95"
+                } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
+                disabled={isSubmitted}
+            >
+                {isSubmitted ? "Submitted" : "Enter"}
+            </button>
+        </form>
+    </div>
+</main>
 
             {/* Floating Animations */}
             <style>
