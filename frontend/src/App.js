@@ -20,7 +20,7 @@ import './App.css';
 function App() {
     const emails = [
         {
-            id: "m1",
+            id: "g1",
             sender: "Promethean Dynamics",
             recipient: "You",
             subject: "Welcome to Aether – Secure Communication Guidelines",
@@ -35,7 +35,7 @@ function App() {
 - Any suspected security breach should be <strong>immediately reported to Internal Security.</strong>`,
         },
         {
-            id: "m2",
+            id: "g2",
             sender: "Harper Brown",
             recipient: "You",
             subject: "Energy Redistribution Metrics – Immediate Validation Required",
@@ -53,7 +53,7 @@ The <strong>latest redistribution tables</strong> have been finalised. <strong>E
 <strong>Sync all frequency markers</strong> before the next scheduled validation.`,
         },
         {
-            id: "m3",
+            id: "e1",
             sender: "Howlen Smith",
             recipient: "You",
             subject: " Critical Update on Project Timeline.",
@@ -67,7 +67,7 @@ Gaze at the letters, first and last, respectively…of the first and last words,
 Planning ahead will make the launch fully achievable.`,
         },
         {
-            id: "m4",
+            id: "g3",
             sender: "Lily Jones",
             recipient: "You",
             subject: " Weekly Progress Report - Aether Deployment",
@@ -83,7 +83,7 @@ However, I have concerns regarding <strong>frequency fluctuations</strong> in <s
 Let's discuss this in our next checkpoint meeting.`,
         },
         {
-            id: "m5",
+            id: "g4",
             sender: "Dr. Rohan Malhotra",
             recipient: "You",
             subject: "Cross-Team Collaboration - Aether Signal Stability",
@@ -99,7 +99,7 @@ I heard from Sumedha last week that she was testing alternative frequency harmon
 Let me know when you’re free for a quick sync.`,
         },
         {
-            id: "m6",
+            id: "g5",
             sender: "Harper Brown.",
             recipient: "You",
             subject: "Urgent: Confidential Alignment Meeting - Mandatory Attendance",
@@ -118,7 +118,7 @@ Agenda:
 Attendance is not optional. Ensure your credentials are up to date before entry. If you have any conflicts, contact your reporting manager immediately.`,
         },
         {
-            id: "m7",
+            id: "g6",
             sender: "HR Department - Promethean Dynamics",
             recipient: "You",
             subject: "Quarterly Performance Review - Schedule Confirmation",
@@ -136,7 +136,7 @@ As part of our regular performance evaluations, we would like to schedule your q
 Please confirm your preferred timing at your earliest convenience. If you require any adjustments, feel free to reach out.`,
         },
         {
-            id: "m8",
+            id: "e2",
             sender: "Lily Jones",
             recipient: "You",
             subject: "A small shift will take us two steps closer.",
@@ -154,7 +154,7 @@ Perh<strong>a</strong>ps a secondary check would ensure our <strong>p</strong>ro
 Recalibrations aside, one constant <strong>h</strong>olds—our foundation is <strong>o</strong>ptimal, and <strong>p</strong>recise adjustments will only perfect it further.`,
         },
         {
-            id: "m9",
+            id: "e3",
             sender: "David Rooster",
             recipient: "You",
             subject: " Auto-Key Alignments - Benchmarking 4 Essential Nodes",
@@ -169,7 +169,7 @@ Xenon Projections Keep priority.
 `,
         },
         {
-            id: "m10",
+            id: "g7",
             sender: "Harper Brown",
             recipient: "You",
             subject: "Transition Protocols and Site Security Measures",

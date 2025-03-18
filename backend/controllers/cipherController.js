@@ -3,6 +3,7 @@ const Cipher = require("../models/cipherModel");
 
 exports.validateCipher = async (req, res) => {
     try {
+       
         const { username, questionId, answer } = req.body;
 
         let team = await Team.findOne({ username });
@@ -21,7 +22,8 @@ exports.validateCipher = async (req, res) => {
             res.status(400).json({ message: "Already validated this cipher!" });
             return;
         }
-
+        console.log(answer);
+        console.log(cipher.correctAnswer);
         if (answer !== cipher.correctAnswer) {
             res.status(400).json({ message: "Incorrect answer!" });
             return;

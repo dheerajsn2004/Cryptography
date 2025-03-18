@@ -23,7 +23,7 @@ const MainPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const trimmedPassword = formData.password.toLowerCase().trim(); // ✅ Convert to lowercase & trim spaces
-
+        console.log(trimmedPassword);
         if (!trimmedPassword) {
             setError("Please enter the secret code!");
             return;
@@ -31,13 +31,13 @@ const MainPage = () => {
 
         try {
             const questionId = "q1";
-            const data = { username, questionId, password: trimmedPassword };
+            const data = { username, questionId, answer: trimmedPassword };
 
             console.log("Submitting Data:", data);
 
             const response = await validateCipher(data);
 
-            if (response?.success) {
+            if (response) {
                 setMessage("✅ Password verified! Redirecting...");
                 setIsSubmitted(true);
                 setTimeout(() => navigate("/email"), 1500);
@@ -67,11 +67,9 @@ const MainPage = () => {
                 </button>
             </header>
 
-<<<<<<< HEAD
             <main className="relative z-10 flex-grow flex items-center justify-center px-6 py-10">
                 <div className="w-full max-w-6xl p-12 md:p-16 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
                     <h2 className="mb-6 text-2xl md:text-3xl font-bold text-white">Enter the Secret Code</h2>
-=======
             {/* Main Content */}
             <main className="relative z-10 flex-grow flex flex-col items-center justify-center px-6 py-10 -mt-8"> {/* Added -mt-8 to move the div up */}
     {/* Text or Image Outside the Div */}
@@ -83,14 +81,12 @@ const MainPage = () => {
             className="w-full max-w-lg mx-auto" // Adjust size as needed
         />
     </div>
->>>>>>> e84c54629ca05832b4da9a89ac800418794a4214
 
     {/* Form Container */}
     <div className="w-full max-w-6xl p-12 md:p-16 bg-blue-900 bg-opacity-0 rounded-2xl shadow-xl text-center">
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {message && <p className="text-green-500 mb-4">{message}</p>}
 
-<<<<<<< HEAD
                     <form onSubmit={handleSubmit}>
                         {/* Fixed Email Input */}
                         <div className="mb-6">
@@ -129,50 +125,6 @@ const MainPage = () => {
                     </form>
                 </div>
             </main>
-=======
-        <form onSubmit={handleSubmit}>
-            {/* Email Input */}
-            <div className="mb-6">
-                <label htmlFor="email" className="block text-white text-lg md:text-xl font-semibold mb-2">
-                    Email:
-                </label>
-                <input
-                    id="email"
-                    type="email"
-                    name="email"
-                    defaultValue={formData.email} // Pre-fill the email
-                    readOnly // Make the email field read-only
-                    className="w-full px-4 py-3 text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all cursor-not-allowed" // Gray background and cursor-not-allowed
-                />
-            </div>
-
-            {/* Password Input */}
-            <div className="mb-6">
-                <label htmlFor="password" className="block text-white text-lg md:text-xl font-semibold mb-2">
-                    Secret Code:
-                </label>
-                <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Enter the secret code"
-                    className="w-full px-4 py-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all"
-                />
-            </div>
-
-            {/* Submit Button */}
-            <button
-                type="submit"
-                className={`w-full text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all transform ${
-                    isSubmitted ? "bg-gray-400 cursor-not-allowed" : "bg-blue-800 hover:bg-blue-500 hover:scale-105 active:scale-95"
-                } focus:outline-none focus:ring-4 focus:ring-indigo-300`}
-                disabled={isSubmitted}
-            >
-                {isSubmitted ? "Submitted" : "Enter"}
-            </button>
-        </form>
     </div>
 </main>
 
@@ -197,7 +149,6 @@ const MainPage = () => {
                 }
                 `}
             </style>
->>>>>>> e84c54629ca05832b4da9a89ac800418794a4214
         </div>
     );
 };
