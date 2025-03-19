@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { validateProject } from "../api/projectApi";
+import { validateDraft } from "../api/draftApi";
 
 const PortfolioPasswordPage = () => {
     const [password, setPassword] = useState("");
@@ -14,17 +14,17 @@ const PortfolioPasswordPage = () => {
         setError(""); // Clear previous errors
 
         try {
-            const questionId = "q1";
+            const questionId = "d1";
             const username = localStorage.getItem("username") || "guest"; // Ensure username is valid
             const sanitizedPassword = password.toLowerCase().trim(); // Convert to lowercase and trim spaces
 
-            const data = { username, questionId, password: sanitizedPassword };
+            const data = { username, questionId, answer: sanitizedPassword };
 
             console.log("Submitting Data:", data);
 
-            const response = await validateProject(data);
+            const response = await validateDraft(data);
 
-            if (response?.success) {
+            if (response) {
                 setMessage("✅ Password verified! Redirecting...");
                 setIsSubmitted(true); // Mark submission successful
             } else {
@@ -32,7 +32,7 @@ const PortfolioPasswordPage = () => {
             }
         } catch (error) {
             console.error("API Error:", error);
-            setError("⚠️ Error connecting to the server. Please try again.");
+            setError("⚠️  Please try again.");
         }
     };
 
@@ -59,13 +59,13 @@ const PortfolioPasswordPage = () => {
 
             {/* Password Entry Box */}
             <div className="relative z-10 bg-white bg-opacity-40 backdrop-blur-lg border border-white border-opacity-30 shadow-2xl p-8 w-full max-w-md rounded-3xl">
-                <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800">
+                <h1 className="text-4xl font-extrabold mb-6 text-center text-gray-800" style={{ fontFamily: "'Agency FB', sans-serif" }}>
                     Enter Access Code
                 </h1>
 
                 <form onSubmit={handlePasswordSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="password" className="block text-lg font-medium text-gray-700 mb-2" style={{ fontFamily: "'Agency FB', sans-serif" }}>
                             Password:
                         </label>
                         <input
@@ -73,24 +73,26 @@ const PortfolioPasswordPage = () => {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full p-3 border border-gray-300 rounded-xl bg-white bg-opacity-60 backdrop-blur-md shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 transition-all font-sans"
+                            className="w-full p-3 border border-gray-300 rounded-xl bg-white bg-opacity-60 backdrop-blur-md shadow-md focus:outline-none focus:ring-4 focus:ring-blue-400 focus:border-blue-500 transition-all"
                             placeholder="Enter password"
+                            style={{ fontFamily: "'Agency FB', sans-serif" }}
                             required
-                            disabled={isSubmitted} // Disable input after success
+                            disabled={isSubmitted}
                         />
                     </div>
 
                     {/* Display error message */}
-                    {error && <p className="text-sm text-red-500 text-center font-semibold">{error}</p>}
+                    {error && <p className="text-sm text-red-500 text-center font-semibold" style={{ fontFamily: "'Agency FB', sans-serif" }}>{error}</p>}
 
                     {/* Display success message */}
-                    {message && <p className="text-sm text-green-500 text-center font-semibold">{message}</p>}
+                    {message && <p className="text-sm text-green-500 text-center font-semibold" style={{ fontFamily: "'Agency FB', sans-serif" }}>{message}</p>}
 
                     <button
                         type="submit"
-                        className={`w-full font-bold py-3 px-6 rounded-xl shadow-lg transition-all transform focus:outline-none font-serif
+                        className={`w-full font-bold py-3 px-6 rounded-xl shadow-lg transition-all transform focus:outline-none text-lg
                             ${isSubmitted ? "bg-gray-500 cursor-not-allowed" : "bg-blue-800 text-white hover:bg-blue-600 hover:scale-105 active:scale-95 focus:ring-4 focus:ring-blue-300"}`}
-                        disabled={isSubmitted} // Disable button after success
+                        style={{ fontFamily: "'Agency FB', sans-serif" }}
+                        disabled={isSubmitted}
                     >
                         {isSubmitted ? "✔ Verified" : "Unlock"}
                     </button>

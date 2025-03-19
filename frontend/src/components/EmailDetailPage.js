@@ -51,15 +51,18 @@ const EmailDetailPage = () => {
             const username = localStorage.getItem("username") || "guest";
             const sanitizedPassword = decryptedText.toLowerCase().trim();
             
-            const response = await validateEmail({ username, questionId: email.id, password: sanitizedPassword });
+            const response = await validateEmail({ username, questionId: email.id, answer: sanitizedPassword });
             if (response) {
-                setSuccessMessage("✅ Password verified! Redirecting...");
+                setSuccessMessage("✅ Password verified!");
+                setTimeout(() => {
+                    handleCloseDecryptModal();
+                }, 1000);
             } else {
                 setError(response?.message || "❌ Incorrect password. Try again.");
             }
         } catch (error) {
             console.error("API Error:", error);
-            setError("⚠️ Error connecting to the server. Please try again.");
+            setError("⚠️ Please try again.");
         }
         
         setIsLoading(false);

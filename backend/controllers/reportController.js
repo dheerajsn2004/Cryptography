@@ -1,47 +1,47 @@
 const Team = require("../models/teamModel");
 const Report = require("../models/reportModel");
+const { Mutex } = require('async-mutex');
+
+const teamMutex = new Mutex();
 
 exports.validateReport = async (req, res) => {
+    const release = await teamMutex.acquire(); // Lock the function
+
     try {
         const { username, questionNumber, answer } = req.body;
 
         let team = await Team.findOne({ username });
-        if (!team){ 
-             res.status(404).json({ error: "Team not found" });
-             return;
+        if (!team) {
+            return res.status(404).json({ error: "Team not found" });
         }
+
         let report = await Report.findOne({ questionNumber });
-        if (!report){
-            res.status(400).json({ message: "Invalid report question number!" });
-            return;
+        if (!report) {
+            return res.status(400).json({ message: "Invalid report question number!" });
         }
 
         let existingAttempt = team.reportValidated.find(q => q.questionNumber === questionNumber);
-
-        if (existingAttempt && existingAttempt.validated) {
-            res.status(400).json({ message: "Already validated this report question!" });
-            return;
+        if (existingAttempt) {
+            return res.status(400).json({ message: "This question has already been validated." });
         }
 
-        if (answer !== report.correctAnswer) {
-             res.status(400).json({ message: "Incorrect answer!" });
-             return;
-        }
+        // Atomic update
+        const updatedTeam = await Team.findOneAndUpdate(
+            { username },
+            {
+                $push: { reportValidated: { questionNumber, validated: true } },
+                $inc: { points: 5 },
+                $set: { lastSubmissionTime: new Date() }
+            },
+            { new: true }
+        );
 
-        if (!existingAttempt) {
-            team.reportValidated.push({ questionNumber, validated: true });
-            team.points += 5; // ✅ Adjust points based on scoring
-        } else {
-            existingAttempt.validated = true;
-        }
-
-        team.lastSubmissionTime = new Date();
-        await team.save();
-
-        res.status(200).json({ message: "Report question validated!", points: team.points });
-        return ;
+        return res.status(200).json({ message: "Report question validated!", points: updatedTeam.points });
 
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        release(); // Release the lock after the function is done
     }
 };

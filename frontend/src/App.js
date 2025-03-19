@@ -62,7 +62,8 @@ The <strong>latest redistribution tables</strong> have been finalised. <strong>E
             cc: ["charlie@example.com"],
             body: `Esteemed colleagues, this is to inform you that all schedules are final. 
 Having cross-checked data, the window is narrowing…this is the common belief. 
-Prior knowledge suggests we must use the methods of Caesar. We need to ensure the plan is completely foolproof. 
+Prior knowledge suggests we must use the methods of Caesar. 
+We need to ensure the plan is completely foolproof. 
 Gaze at the letters, first and last, respectively…of the first and last words, for time has been keyed. 
 Planning ahead will make the launch fully achievable.`,
         },

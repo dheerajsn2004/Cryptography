@@ -19,11 +19,12 @@ exports.validateEmail = async (req, res) => {
         let existingAttempt = team.emailValidated.find(q => q.questionId === questionId);
 
         if (existingAttempt && existingAttempt.validated) {
-             res.status(400).json({ message: "Already validated this email!" });
+             res.status(200).json({ message: "Already validated this email!" });
              return;
         }
 
         if (answer !== email.correctAnswer) {
+            console.log(answer);
              console.log(email.correctAnswer);
              res.status(400).json({ message: "Incorrect answer!" });
              return;

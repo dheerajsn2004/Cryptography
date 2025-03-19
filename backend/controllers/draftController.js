@@ -18,11 +18,15 @@ exports.validateDraft = async (req, res) => {
         let existingAttempt = team.draftValidated.find(q => q.questionId === questionId);
 
         if (existingAttempt && existingAttempt.validated) {
+            console.log(answer);
+            console.log(draft.correctAnswer);
             res.status(400).json({ message: "Already validated this draft!" });
             return ;
         }
 
         if (answer !== draft.correctAnswer) {
+            console.log(answer);
+            console.log(draft.correctAnswer);
              res.status(400).json({ message: "Incorrect answer!" });
              return;
         }
